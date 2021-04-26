@@ -1,0 +1,39 @@
+#!/bin/bash
+
+kill_nifi_registry() {
+  echo Killing NiFi-Registry...
+  docker kill nifi-registry
+  docker rm nifi-registry
+}
+
+start_unsecure_nifi_registry() {
+  docker run -d \
+    --restart always \
+    --name nifi-registry \
+    --env NIFI_REGISTRY_JMX_PORT=5555 \
+    --env NIFI_REGISTRY_WEB_HTTPS_PORT="${port}" \
+    --env NIFI_REGISTRY_WEB_HTTPS_HOST="${host}" \
+    --env NIFI_REGISTRY_DB_TIMEZONE="${db_tz}" \
+    --env NIFI_REGISTRY_DB_NAME="${db_name}" \
+    --env NIFI_REGISTRY_DB_HOST="${db_host}" \
+    --env NIFI_REGISTRY_DB_MAX_CONN="${db_max_conn}" \
+    --env NIFI_REGISTRY_DB_USER_NAME="${db_username}" \
+    --env NIFI_REGISTRY_DB_PASSWORD="${db_password}" \
+    --env NIFI_REGISTRY_S3_BUCKET_NAME="${s3_bucket}" \
+    --env NIFI_REGISTRY_ACCESS_KEY_ID="${s3_access_key}" \
+    --env NIFI_REGISTRY_SECRET_ACCESS_KEY_ID="${s3_secret_access_key}" \
+    --env NIFI_REGISTRY_S3_BUCKET_REGION="${s3_region}" \
+    --env ENABLE_LDAP="false" \
+    -p ${port}:8080 \
+    "${docker_image}"
+}
+
+docker_login(){
+  if [ -n "${docker_username}" ] || [ -n "${docker_password}" ] || [ -n "${docker_registry}" ]; then
+    docker login -u ${docker_username} -p ${docker_password} ${docker_registry}
+  fi
+}
+
+kill_nifi_registry
+docker_login
+start_unsecure_nifi_registry
