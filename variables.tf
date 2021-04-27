@@ -1,7 +1,7 @@
 variable "instance_type" {
   description = "The instance type to use"
   type        = string
-  default     = "t3.small"
+  default     = "t3.medium" # minimum
 }
 
 variable "host_name" {

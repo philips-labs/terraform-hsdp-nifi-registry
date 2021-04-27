@@ -36,8 +36,6 @@ resource "hsdp_container_host_exec" "instance" {
 
   file {
     content = templatefile("${path.module}/scripts/bootstrap-nifi-registry.sh.tmpl", {
-      docker_username      = var.docker_username
-      docker_password      = var.docker_password
       docker_image         = var.docker_image
       docker_registry      = var.docker_registry
       port                 = var.nifi_registry_port
@@ -46,11 +44,7 @@ resource "hsdp_container_host_exec" "instance" {
       db_name              = var.nifi_registry_db_name
       db_host              = var.nifi_registry_db_host
       db_max_conn          = var.nifi_registry_db_max_connections
-      db_username          = var.nifi_registry_db_username
-      db_password          = var.nifi_registry_db_password
       s3_bucket            = var.nifi_registry_s3_bucket_name
-      s3_access_key        = var.nifi_registry_s3_access_key_id
-      s3_secret_access_key = var.nifi_registry_s3_secret_access_key_id
       s3_region            = var.nifi_registry_s3_bucket_region
     })
     destination = "/home/${var.user}/bootstrap-nifi-registry.sh"
@@ -58,6 +52,6 @@ resource "hsdp_container_host_exec" "instance" {
   }
 
   commands = [
-    "/home/${var.user}/bootstrap-nifi-registry.sh"
+    "/home/${var.user}/bootstrap-nifi-registry.sh ${var.nifi_registry_db_username} ${var.nifi_registry_db_password} ${var.nifi_registry_s3_access_key_id} ${var.nifi_registry_s3_secret_access_key_id} ${var.docker_username} ${var.docker_password}"
   ]
 }
