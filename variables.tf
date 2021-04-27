@@ -81,7 +81,7 @@ variable "nifi_registry_host" {
 variable "nifi_registry_port" {
   description = "The port to be used for nifi-registry"
   type        = string
-  default     = "8080"
+  default     = "8282"
 }
 
 # Database for NiFi-Registry
