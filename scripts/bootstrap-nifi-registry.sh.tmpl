@@ -1,14 +1,5 @@
 #!/bin/bash
 
-init() {
-  db_username="$1"
-  db_password="$2"
-  s3_access_key="$3"
-  s3_secret_access_key="$4"
-  docker_username="$5"
-  docker_password="$6"
-}
-
 kill_nifi_registry() {
   echo Killing NiFi-Registry...
   docker kill nifi-registry
@@ -42,7 +33,6 @@ docker_login(){
   fi
 }
 
-init "$@"
 kill_nifi_registry
 docker_login
 start_unsecure_nifi_registry
