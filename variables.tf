@@ -19,7 +19,7 @@ variable "volume_size" {
 variable "iops" {
   description = "IOPS to provision for EBS storage"
   type        = number
-  default     = 500
+  default     = 100
 }
 
 variable "user_groups" {
