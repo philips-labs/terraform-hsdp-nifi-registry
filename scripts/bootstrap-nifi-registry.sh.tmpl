@@ -6,6 +6,7 @@ kill_nifi_registry() {
   docker rm nifi-registry
 }
 
+
 start_unsecure_nifi_registry() {
   docker run -d \
     --restart always \
