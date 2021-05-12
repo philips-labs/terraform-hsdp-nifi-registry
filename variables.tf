@@ -138,81 +138,8 @@ variable "nifi_registry_s3_bucket_region" {
   type        = string
 }
 
-# LDAP
-//variable "nifi_registry_ldap" {
-//  description = "The enable LDAP for Nifi Registry"
-//  type        = bool
-//  default     = false
-//}
-//
-//variable "nifi_key_store" {
-//  type        = string
-//  description = "Nifi Key Store needs to be of type JKS"
-//}
-//
-//variable "nifi_key_store_password" {
-//  type        = string
-//  description = "Nifi Key Store password"
-//}
-//
-//variable "nifi_trust_store" {
-//  type        = string
-//  description = "Nifi Trust Store needs to be of type JKS"
-//}
-//
-//variable "nifi_trust_store_password" {
-//  type        = string
-//  description = "Nifi trust Store password"
-//}
-//
-//variable "ldap_dn" {
-//  type        = string
-//  description = "the DN of the LDAP to be used. for e.g. dn=nifi,dn=com"
-//}
-//
-//variable "ldap_manager" {
-//  type        = string
-//  description = "the CN and the OU of the account that needs to be used by Nifi-Registry to bind to the LDAP service"
-//}
-//
-//variable "ldap_manager_password" {
-//  type        = string
-//  description = "the password of the account that needs to be used by Nifi-Registry to bind to the LDAP service"
-//}
-//
-//variable "ldap_port" {
-//  type        = string
-//  description = "port of the LDAP service"
-//}
-//
-//variable "ldap_groups" {
-//  type        = string
-//  description = "the LDAP groups to be used for the user search base"
-//}
-//
-//variable "initial_admin_identity" {
-//  type        = string
-//  description = "the CN and the OU of the account that needs to be used as the admin account by Nifi-Registry"
-//}
-//
-//variable "ldap_conf_file" {
-//  type        = string
-//  description = "the configuration file for LDAP server to be uploaded to s3"
-//}
-
-
-//"NIFI_REGISTRY_SECURITY_KEYSTORE"         = filebase64(var.NIFI_KEY_STORE)
-//"KEYSTORE_TYPE"                           = "JKS"
-//"KEYSTORE_PASSWORD"                       = var.NIFI_KEY_STORE_PASSWORD
-//"KEY_PASSWORD"                            = var.NIFI_KEY_STORE_PASSWORD
-//"NIFI_REGISTRY_SECURITY_TRUSTSTORE"       = filebase64(var.NIFI_TRUST_STORE)
-//"TRUSTSTORE_TYPE"                         = "JKS"
-//"TRUSTSTORE_PASSWORD"                     = var.NIFI_TRUST_STORE_PASSWORD
-//
-//"LDAP_AUTHENTICATION_STRATEGY"            = "SIMPLE"
-//"LDAP_MANAGER_DN"                         = "${var.LDAP_MANAGER},${var.LDAP_DN}"
-//"LDAP_MANAGER_PASSWORD"                   = var.LDAP_MANAGER_PASSWORD
-//"LDAP_URL"                                = "ldap://${module.ldap-server.cf_app_endpoint}:${var.LDAP_PORT}"
-//"LDAP_USER_SEARCH_BASE"                   = "${var.LDAP_GROUPS},${var.LDAP_DN}"
-//"LDAP_GROUP_MEMBER_ATTRIBUTE"             = var.LDAP_DN
-//"INITIAL_ADMIN_IDENTITY"                  = "${var.INITIAL_ADMIN_IDENTITY},${var.LDAP_DN}"
+variable "jmx_exporter_version" {
+  description = "Deploy jmx exporters for Prometheus as javaagent"
+  type        = string
+  default     = "0.15.0"
+}

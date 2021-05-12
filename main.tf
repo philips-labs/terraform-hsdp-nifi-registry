@@ -52,6 +52,7 @@ resource "hsdp_container_host_exec" "instance" {
       s3_access_key        = var.nifi_registry_s3_access_key_id
       s3_secret_access_key = var.nifi_registry_s3_secret_access_key_id
       s3_region            = var.nifi_registry_s3_bucket_region
+      jmx_exporter_version = var.jmx_exporter_version
     })
     destination = "/home/${var.user}/bootstrap-nifi-registry.sh"
     permissions = "0700"

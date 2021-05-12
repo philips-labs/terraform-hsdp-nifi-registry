@@ -6,7 +6,6 @@ kill_nifi_registry() {
   docker rm nifi-registry
 }
 
-
 start_unsecure_nifi_registry() {
   docker run -d \
     --restart always \
@@ -24,7 +23,9 @@ start_unsecure_nifi_registry() {
     --env NIFI_REGISTRY_ACCESS_KEY_ID="${s3_access_key}" \
     --env NIFI_REGISTRY_SECRET_ACCESS_KEY_ID="${s3_secret_access_key}" \
     --env NIFI_REGISTRY_S3_BUCKET_REGION="${s3_region}" \
+    -v "jmx_exporter:/opt/nifi-registry/jmx" \
     -p ${port}:18080 \
+    -p 10001:10001 \
     "${docker_image}"
 }
 
@@ -34,6 +35,18 @@ docker_login(){
   fi
 }
 
+download_jmx_agent(){
+  echo "Download JMX Prometheus JavaAgent ${jmx_exporter_version}"
+  mkdir -p jmx
+  mv config.yml ./jmx
+  cd jmx
+  curl -s -o jmx_export_agent.jar "https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/${jmx_exporter_version}/jmx_prometheus_javaagent-${jmx_exporter_version}.jar"
+  docker volume rm jmx_exporter
+  docker volume create --driver local --name jmx_exporter --opt type=none --opt device=`pwd` --opt o=uid=root,gid=root --opt o=bind
+  cd ..
+}
+
 kill_nifi_registry
+download_jmx_agent
 docker_login
 start_unsecure_nifi_registry
