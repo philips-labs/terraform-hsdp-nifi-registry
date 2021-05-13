@@ -58,6 +58,11 @@ resource "hsdp_container_host_exec" "instance" {
     permissions = "0700"
   }
 
+  file {
+    source      = "${path.module}/scripts/config.yml"
+    destination = "/home/${var.user}/config.yml"
+  }
+
   commands = [
     "/home/${var.user}/bootstrap-nifi-registry.sh"
   ]
