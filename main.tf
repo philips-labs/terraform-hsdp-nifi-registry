@@ -3,6 +3,7 @@ resource "random_id" "id" {
 }
 
 resource "hsdp_container_host" "nifi-registry" {
+  user          = var.user
   name          = var.host_name == "" ? "nifi-registry-${random_id.id.hex}.dev" : "nifi-registry-${var.host_name}.dev"
   iops          = var.iops
   volumes       = 1
